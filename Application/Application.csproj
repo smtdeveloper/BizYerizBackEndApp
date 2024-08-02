@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\FoodPackages\Commands\Delete\" />
+    <Folder Include="Features\FoodPackages\Commands\Update\" />
+    <Folder Include="Features\FoodPackages\Constants\" />
+    <Folder Include="Features\FoodPackages\Rules\" />
+    <Folder Include="Features\FoodPackages\Profiles\" />
+    <Folder Include="Features\FoodPackages\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.0" />
+  </ItemGroup>
+
 </Project>
