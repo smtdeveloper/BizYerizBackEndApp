@@ -1,4 +1,5 @@
 ﻿using Application.Services.Repositories;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -19,23 +20,22 @@ namespace Application.Features.FoodPackages.Commands.Create
         {
 
             private readonly IFoodPackageRepository _foodPackageRepository;
-            public CreateFoodPackagesCommandHandler(IFoodPackageRepository foodPackageRepository)
+            private readonly IMapper _mapper;
+
+            public CreateFoodPackagesCommandHandler(IFoodPackageRepository foodPackageRepository, IMapper mapper)
             {
                 _foodPackageRepository = foodPackageRepository;
+                _mapper = mapper;
             }
 
             public async Task<CreatedFoodPackagesResponse>? Handle(CreateFoodPackagesCommand request, CancellationToken cancellationToken)
             {
-                FoodPackage foodPackages = new();
+                FoodPackage foodPackages = _mapper.Map<FoodPackage>(request);
                 foodPackages.Id = Guid.NewGuid();
-                foodPackages.Name = request.Name;
-
+                
                 var result = await _foodPackageRepository.AddAsync(foodPackages);
 
-                CreateFoodPackagesCommand createFoodPackagesCommand = new();
-
-                CreatedFoodPackagesResponse createdFoodPackagesResponse = new CreatedFoodPackagesResponse 
-                { Id = result.Id, Name = result.Name };
+                CreatedFoodPackagesResponse createdFoodPackagesResponse = _mapper.Map<CreatedFoodPackagesResponse>(result);
 
                 return createdFoodPackagesResponse;
             }
