@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Application.Services.Repositories;
+using Domain.Entities;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +17,27 @@ namespace Application.Features.FoodPackages.Commands.Create
 
         public class CreateFoodPackagesCommandHandler : IRequestHandler<CreateFoodPackagesCommand, CreatedFoodPackagesResponse>
         {
-            public Task<CreatedFoodPackagesResponse>? Handle(CreateFoodPackagesCommand request, CancellationToken cancellationToken)
+
+            private readonly IFoodPackageRepository _foodPackageRepository;
+            public CreateFoodPackagesCommandHandler(IFoodPackageRepository foodPackageRepository)
             {
-                CreatedFoodPackagesResponse createdFoodPackagesResponse = new CreatedFoodPackagesResponse { Id = new Guid(), Name = request.Name };
-                return null;
+                _foodPackageRepository = foodPackageRepository;
+            }
+
+            public async Task<CreatedFoodPackagesResponse>? Handle(CreateFoodPackagesCommand request, CancellationToken cancellationToken)
+            {
+                FoodPackage foodPackages = new();
+                foodPackages.Id = Guid.NewGuid();
+                foodPackages.Name = request.Name;
+
+                var result = await _foodPackageRepository.AddAsync(foodPackages);
+
+                CreateFoodPackagesCommand createFoodPackagesCommand = new();
+
+                CreatedFoodPackagesResponse createdFoodPackagesResponse = new CreatedFoodPackagesResponse 
+                { Id = result.Id, Name = result.Name };
+
+                return createdFoodPackagesResponse;
             }
 
         }
