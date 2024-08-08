@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Services.Repositories;
 
-public interface IFoodPackagesRepository : IAsyncRepository<FoodPackage, Guid>, IRepository<FoodPackage, Guid>
+public interface IFoodPackageRepository : IAsyncRepository<FoodPackage, Guid>, IRepository<FoodPackage, Guid>
 {
 
 
