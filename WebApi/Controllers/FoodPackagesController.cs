@@ -11,7 +11,7 @@ namespace WebApi.Controllers
     {
 
 
-        [HttpPost]
+        [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] CreateFoodPackagesCommand createFoodPackagesCommand) 
         {
            CreatedFoodPackagesResponse response = await Mediator.Send(createFoodPackagesCommand);

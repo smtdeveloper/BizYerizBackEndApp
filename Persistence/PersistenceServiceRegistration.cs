@@ -16,9 +16,11 @@ namespace Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("nArchitecture"));
+            services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("BizYerizDB"));
 
-            services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase(configuration.GetConnectionString("BizYerizDB")));
+            //services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase(configuration.GetConnectionString("BizYerizDB")));
+             
+            
 
             services.AddScoped<IFoodPackageRepository, FoodPackageRepository>();
             
